@@ -2,9 +2,7 @@ package main
 
 import (
 	"fmt"
-	"io"
 	"net"
-	"os"
 )
 
 func main() {
@@ -25,17 +23,15 @@ func main() {
 	defer connect.Close()
 
 	for {
-		buffer := make([]byte, 1024)
-
-		_, err = connect.Read(buffer)
+		resp := NewResp(connect)
+		value, err := resp.Read()
 		if err != nil {
-			if err == io.EOF {
-				break
-			}
-			fmt.Println("error reading from client: ", err.Error())
-			os.Exit(1)
+			fmt.Println(err)
+			return
 		}
+		fmt.Println(value)
 
+		// テストのためrequestを無視し一時的にsOKを返す
 		connect.Write([]byte("+OK\r\n"))
 	}
 }
