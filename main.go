@@ -31,6 +31,11 @@ func main() {
 		}
 		fmt.Println(value)
 
+		_ = value
+
+		writer := NewWriter(connect)
+		writer.Write(Value{typ: "string", str: "OK"})
+
 		// テストのためrequestを無視し一時的にsOKを返す
 		connect.Write([]byte("+OK\r\n"))
 	}
