@@ -55,8 +55,5 @@ func main() {
 
 		result := handler(args)
 		writer.Write(result)
-
-		// テストのためrequestを無視し一時的にsOKを返す
-		connect.Write([]byte("+OK\r\n"))
 	}
 }
